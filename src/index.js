@@ -19,7 +19,6 @@ class Board extends React.Component {
     };
   }
   renderSquare(i) {
-    const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     return (
       <Square value={this.props.squares[i]}
               onClick={() => this.props.onClick(i)}
@@ -28,15 +27,7 @@ class Board extends React.Component {
   }
 
   render() {
-    const winner = calculateWinner(this.state.squares);
-    let status;
-    if (winner) {
-      status = 'Winner: ' + winner;
-    } else {
-      status = 'Next player ' + (this.state.xIsNext ? 'X' : 'O');
-    }
-
-    return (
+        return (
       <div>
         <div className="board-row">
           {this.renderSquare(0)}
@@ -103,7 +94,7 @@ class Game extends React.Component {
       const desc = move ? 'Move #' + move : 'Game start';
       return (
         <li>
-          <a herf='#' onClick={() => this.jumpTo(move)}>{desc}</a>
+          <a href='#' onClick={() => this.jumpTo(move)}>{desc}</a>
         </li>
       );
     });
