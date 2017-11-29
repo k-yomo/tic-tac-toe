@@ -4,9 +4,12 @@ import { createStore } from 'redux';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Game from './components/Game';
-import ticTacToeReducer from './reducers/ticTacToe';
+import gameReducer from './reducers/game';
 
-const store = createStore(ticTacToeReducer);
+const store = createStore(
+  gameReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 const jsx = (
   <Provider store={store}>

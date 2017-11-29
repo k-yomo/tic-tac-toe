@@ -1,51 +1,54 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Board from './Board';
+import { fillCell, jumpBackTo } from '../actions/game';
 
-export default class Game extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      history: [{
-        squares: Array(9).fill(null),
-      }],
-      stepNumber: 0,
-      xIsNext: true,
-    };
-  }
+class Game extends React.Component {
 
   handleClick(i) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
+    const history = this.props.history.slice(0, this.props.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
-    if (calculateWinner(squares) || squares[i]) {
+    if (this.calculateWinner(squares) || squares[i]) {
       return;
     }
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
-    this.setState({
-      history: history.concat([{
-        squares: squares,
-      }]),
-      stepNumber: history.length,
-      xIsNext: !this.state.xIsNext,
-    });
+    squares[i] = this.props.xIsNext ? 'X' : 'O';
+    this.props.dispatch(fillCell(squares));
   }
 
   jumpTo(step) {
-    this.setState({
-      stepNumber: step,
-      xIsNext: (step % 2) === 0,
-    });
+    this.props.dispatch(jumpBackTo(step))
+  }
+
+  calculateWinner(squares) {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for (var i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return squares[a];
+      }
+    }
+    return null;
   }
 
   render() {
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
+    const history = this.props.history;
+    const current = history[this.props.stepNumber];
+    const winner = this.calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
       const desc = move ? 'Move #' + move : 'Game start';
       return (
-        <li>
+        <li key={move}>
           <a href='#' onClick={() => this.jumpTo(move)}>{desc}</a>
         </li>
       );
@@ -55,7 +58,7 @@ export default class Game extends React.Component {
     if (winner) {
       status = 'Winner: ' + winner;
     } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+      status = 'Next player: ' + (this.props.xIsNext ? 'X' : 'O');
     }
 
     return (
@@ -75,22 +78,10 @@ export default class Game extends React.Component {
   }
 }
 
-function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (var i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
-}
+const mapStateToProps = (state) => ({
+  history: state.history,
+  stepNumber: state.stepNumber,
+  xIsNext: state.xIsNext
+})
+
+export default connect(mapStateToProps)(Game);
