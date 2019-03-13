@@ -82,6 +82,6 @@ const mapStateToProps = (state) => ({
   history: state.history,
   stepNumber: state.stepNumber,
   xIsNext: state.xIsNext
-})
+});
 
 export default connect(mapStateToProps)(Game);

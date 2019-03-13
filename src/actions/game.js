@@ -1,10 +1,11 @@
+import {FILL_CELL, JUMP_TO} from "../actionTypes";
 
 export const fillCell = (squares) => ({
-  type: 'FILL_CELL',
+  type: FILL_CELL,
   squares
 });
 
 export const jumpBackTo = (stepNumber) => ({
-  type: 'JUMP_TO',
+  type: JUMP_TO,
   stepNumber
-})
+});
