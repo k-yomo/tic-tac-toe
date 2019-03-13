@@ -1,4 +1,4 @@
-import {FILL_CELL, JUMP_TO} from "../actionTypes";
+import {FILL_CELL, JUMP_TO} from "../constants/actionTypes";
 
 const DEFAULT_STATE = {
   history: [{

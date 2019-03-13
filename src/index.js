@@ -3,8 +3,8 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Game from './components/Game';
-import gameReducer from './reducers/game';
+import Game from './containers/Game';
+import gameReducer from './reducers/gameReducer';
 
 const store = createStore(
   gameReducer,
@@ -15,7 +15,7 @@ const jsx = (
   <Provider store={store}>
     <Game />
   </Provider>
-)
+);
 ReactDOM.render(
   jsx,
   document.getElementById('root')
