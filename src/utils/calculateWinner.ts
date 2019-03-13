@@ -1,5 +1,6 @@
+import {Squares} from "../reducers/gameReducer";
 
-export default (squares) => {
+export default (squares: Squares): string | null => {
   const bingoLines = [
     [0, 1, 2],
     [3, 4, 5],
