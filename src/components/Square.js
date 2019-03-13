@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default (props) => (
-  <button className='square' onClick={props.onClick}>
-    {props.value}
+export default ({value, onClick}) => (
+  <button className='square' onClick={onClick}>
+    {value}
   </button>
 );
