@@ -1,17 +1,17 @@
-import { ActionTypes } from "../constants/actionTypes";
+import { ActionTypes } from '../constants/actionTypes';
 
-export type Squares = Array<string | null>
+export type Squares = (string | null)[];
 
 export interface GameState {
-  history: Array<Squares>,
-  stepNumber: number,
-  xIsNext: boolean
+  history: Squares[];
+  stepNumber: number;
+  xIsNext: boolean;
 }
 
 const DEFAULT_STATE = {
   history: [Array(9).fill(null)],
   stepNumber: 0,
-  xIsNext: true
+  xIsNext: true,
 };
 
 export default (state: GameState = DEFAULT_STATE, action: any): GameState => {
@@ -20,13 +20,13 @@ export default (state: GameState = DEFAULT_STATE, action: any): GameState => {
       return {
         history: [...state.history, action.payload],
         stepNumber: state.stepNumber + 1,
-        xIsNext: !state.xIsNext
+        xIsNext: !state.xIsNext,
       };
     case ActionTypes.JUMP_TO:
       return {
         history: state.history.slice(0, action.payload + 1),
         stepNumber: action.payload,
-        xIsNext: (action.payload % 2) === 0
+        xIsNext: action.payload % 2 === 0,
       };
     default:
       return state;

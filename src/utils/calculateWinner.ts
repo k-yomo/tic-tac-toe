@@ -1,4 +1,4 @@
-import {Squares} from "../reducers/gameReducer";
+import { Squares } from '../reducers/gameReducer';
 
 export default (squares: Squares): string | null => {
   const bingoLines = [
@@ -11,10 +11,12 @@ export default (squares: Squares): string | null => {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  for (let i = 0; i < bingoLines.length; i++) {
+  for (let i = 0; i < bingoLines.length; i += 1) {
     const [a, b, c] = bingoLines[i];
     const isBingo = squares[a] === squares[b] && squares[a] === squares[c];
-    if (isBingo) { return squares[a]; }
+    if (isBingo) {
+      return squares[a];
+    }
   }
   return null;
-}
+};
